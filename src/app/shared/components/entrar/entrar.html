@@ -1,0 +1,22 @@
+<form class="flex flex-col gap-4">
+    <div class="flex flex-col gap-2">
+        <label for="email" class="text-neutral-900 font-semibold">Email</label>
+        <app-input-login type="email" [icon]="emailIcon" placeholder="Digite seu email"></app-input-login>
+    </div>
+    <div class="flex flex-col gap-2 ">
+        <div class="w-full flex justify-between items-center">
+            <label for="email" class="text-neutral-900 font-semibold">Senha</label>
+            <a href="#" class="text-primary-500 text-sm ">Esqueceu a senha?</a>
+        </div>
+        <app-input-login type="password" [icon]="lockIcon" placeholder="Digite sua senha"></app-input-login>
+    </div>
+    <div class="flex gap-2 items-center">
+        <input type="checkbox" id="rememberme" class="accent-primary-500">
+        <label for="rememberme" class="text-sm text-neutral-600 font-semibold">Lembrar de mim neste dispositivo</label>
+    </div>
+    <button
+        class="bg-primary-500 hover:bg-primary-500/80 text-neutral-900 flex justify-center items-center gap-2 py-2 rounded-md cursor-pointer shadow-sm">
+        <p class="text-xl font-lexend font-semibold">Entrar</p>
+        <fa-icon [icon]="arrowIcon"></fa-icon>
+    </button>
+</form>

@@ -1,9 +1,9 @@
-<main class="flex flex-col gap-8 items-center justify-center h-screen">
+<main class="flex min-h-screen flex-col items-center justify-center gap-8 px-4">
     <div class="flex flex-col gap-4 justify-center items-center">
         <app-logo></app-logo>
         <p class="text-neutral-600 font-medium">Sua jornada acadêmica organizada em um só lugar </p>
     </div>
-    <div class="w-md flex flex-col gap-8 bg-white rounded-xl border border-neutral-300 shadow-sm shadow-neutral-400 p-6">
+    <div class="w-full max-w-md flex flex-col gap-8 bg-white rounded-xl border border-neutral-300 shadow-sm shadow-neutral-400 p-6">
         <div class="flex justify-between gap-2 bg-neutral-100 rounded-md p-2 font-semibold">
             <button class="flex-1/2 bg-white hover:bg-white/80 shadow-md text-neutral-900 py-2 rounded-md cursor-pointer">Entrar</button>
             <button class="flex-1/2 bg-white/0 hover:bg-white/40 text-neutral-900 py-2 rounded-md cursor-pointer">Cadastrar</button>
@@ -34,7 +34,7 @@
                 <input type="checkbox" id="rememberme" class="accent-primary-500">
                 <label for="rememberme" class="text-sm text-neutral-600 font-semibold">Lembrar de mim neste dispositivo</label>
             </div>
-            <button class="bg-primary-500 hover:bg-primary-500/80 text-neutral-900 flex justify-center items-center gap-2 py-2 rounded-md cursor-pointer shadow-sm" >
+            <button type="button" (click)="goToDashboard()" class="bg-primary-500 hover:bg-primary-500/80 text-neutral-900 flex justify-center items-center gap-2 py-2 rounded-md cursor-pointer shadow-sm" >
                 <p class="text-xl font-lexend font-semibold">Entrar</p>
                 <fa-icon [icon]="arrowIcon"></fa-icon>
             </button>

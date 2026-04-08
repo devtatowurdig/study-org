@@ -1,0 +1,102 @@
+<app-layout [searchValue]="search()" (searchValueChange)="updateSearch($event)">
+  <section class="mx-auto w-full max-w-4xl space-y-4">
+    <div class="flex flex-wrap items-start justify-between gap-3">
+      <div>
+        <h1 class="text-4xl font-bold text-neutral-800">Configuracoes</h1>
+        <p class="mt-1 text-neutral-500">Gerencie sua conta, preferencias de estudo e aparencia do sistema.</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button type="button" class="rounded-lg border border-neutral-200 px-3 py-2 text-sm text-neutral-600 hover:bg-neutral-100">Cancelar</button>
+        <button type="button" class="rounded-lg bg-primary-500 px-3 py-2 text-sm font-semibold text-neutral-900 hover:bg-primary-500/80">Salvar Alteracoes</button>
+      </div>
+    </div>
+
+    <section class="rounded-2xl border border-neutral-200 bg-white p-4">
+      <h2 class="text-lg font-semibold text-neutral-800">Dados Pessoais</h2>
+      <div class="mt-3 grid gap-3 md:grid-cols-2">
+        <label class="text-sm text-neutral-600">Nome Completo
+          <input type="text" value="Lucas Silva" class="mt-1 w-full rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-2 outline-none" />
+        </label>
+        <label class="text-sm text-neutral-600">E-mail Institucional
+          <input type="email" value="lucas.silva@universidade.edu.br" class="mt-1 w-full rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-2 outline-none" />
+        </label>
+      </div>
+    </section>
+
+    <section class="rounded-2xl border border-neutral-200 bg-white p-4">
+      <h2 class="text-lg font-semibold text-neutral-800">Preferencias de Notificacao</h2>
+      <div class="mt-3 space-y-3">
+        <article class="flex items-center justify-between rounded-lg border border-neutral-200 p-3">
+          <div>
+            <p class="font-semibold text-neutral-800">Notificacoes por E-mail</p>
+            <p class="text-sm text-neutral-500">Receba lembretes por e-mail</p>
+          </div>
+          <button type="button" (click)="toggleEmail()" class="h-6 w-11 rounded-full p-1 transition" [class]="emailNotifications() ? 'bg-primary-500' : 'bg-neutral-300'">
+            <span class="block h-4 w-4 rounded-full bg-white transition" [class]="emailNotifications() ? 'translate-x-5' : 'translate-x-0'"></span>
+          </button>
+        </article>
+
+        <article class="flex items-center justify-between rounded-lg border border-neutral-200 p-3">
+          <div>
+            <p class="font-semibold text-neutral-800">Alertas Push</p>
+            <p class="text-sm text-neutral-500">Notificacoes no navegador</p>
+          </div>
+          <button type="button" (click)="togglePush()" class="h-6 w-11 rounded-full p-1 transition" [class]="pushNotifications() ? 'bg-primary-500' : 'bg-neutral-300'">
+            <span class="block h-4 w-4 rounded-full bg-white transition" [class]="pushNotifications() ? 'translate-x-5' : 'translate-x-0'"></span>
+          </button>
+        </article>
+
+        <article class="flex items-center justify-between rounded-lg border border-neutral-200 p-3">
+          <div>
+            <p class="font-semibold text-neutral-800">Resumo Diario</p>
+            <p class="text-sm text-neutral-500">Um relatorio rapido no inicio do dia</p>
+          </div>
+          <button type="button" (click)="toggleSummary()" class="h-6 w-11 rounded-full p-1 transition" [class]="dailySummary() ? 'bg-primary-500' : 'bg-neutral-300'">
+            <span class="block h-4 w-4 rounded-full bg-white transition" [class]="dailySummary() ? 'translate-x-5' : 'translate-x-0'"></span>
+          </button>
+        </article>
+      </div>
+    </section>
+
+    <section class="rounded-2xl border border-neutral-200 bg-white p-4">
+      <h2 class="text-lg font-semibold text-neutral-800">Tema e Aparencia</h2>
+      <div class="mt-3 grid gap-3 sm:grid-cols-2">
+        <button
+          type="button"
+          (click)="setLightMode()"
+          class="rounded-xl border p-4 text-left"
+          [class]="!isDark() ? 'border-primary-500 bg-cyan-50' : 'border-neutral-200 bg-neutral-50'"
+        >
+          <p class="font-semibold text-neutral-800">Claro</p>
+          <p class="text-sm text-neutral-500">Interface clara para ambientes bem iluminados.</p>
+        </button>
+        <button
+          type="button"
+          (click)="setDarkMode()"
+          class="rounded-xl border p-4 text-left"
+          [class]="isDark() ? 'border-primary-500 bg-cyan-50' : 'border-neutral-200 bg-neutral-50'"
+        >
+          <p class="font-semibold text-neutral-800">Escuro</p>
+          <p class="text-sm text-neutral-500">Menos fadiga visual para estudos noturnos.</p>
+        </button>
+      </div>
+    </section>
+
+    <section class="rounded-2xl border border-red-100 bg-red-50 p-4">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex items-start gap-2">
+          <fa-icon [icon]="shieldIcon" class="mt-1 text-red-500"></fa-icon>
+          <div>
+            <h3 class="font-semibold text-neutral-800">Seguranca da Conta</h3>
+            <p class="text-sm text-neutral-600">Ultimo acesso: Hoje as 09:42 em Sao Paulo, BR</p>
+          </div>
+        </div>
+        <button type="button" class="text-sm text-red-600 hover:text-red-500">Excluir Conta</button>
+      </div>
+      <div class="mt-3 rounded-lg border border-red-200 bg-white p-3 text-sm text-neutral-600">
+        <fa-icon [icon]="infoIcon" class="mr-2 text-primary-500"></fa-icon>
+        Recomendamos trocar sua senha a cada 90 dias para manter sua conta protegida.
+      </div>
+    </section>
+  </section>
+</app-layout>

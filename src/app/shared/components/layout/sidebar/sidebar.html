@@ -1,0 +1,38 @@
+<aside class="hidden w-64 shrink-0 border-r border-neutral-200 bg-neutral-50 lg:flex lg:flex-col">
+  <div class="border-b border-neutral-200 p-4">
+    <div class="flex items-center gap-2 font-lexend font-bold text-primary-500">
+      <div class="grid h-7 w-7 place-items-center rounded-lg bg-primary-500/20 text-xs">U</div>
+      <span>Organizador de Estudos</span>
+    </div>
+  </div>
+
+  <nav class="flex-1 space-y-1 p-3 text-sm text-neutral-700">
+    <a routerLink="/dashboard" routerLinkActive="bg-neutral-200 font-semibold" class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-neutral-100">
+      <fa-icon [icon]="dashboardIcon"></fa-icon>
+      Dashboard
+    </a>
+    <a routerLink="/tasks" routerLinkActive="bg-neutral-200 font-semibold" class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-neutral-100">
+      <fa-icon [icon]="createTaskIcon"></fa-icon>
+      Criar Tarefa
+    </a>
+    <a routerLink="/calendar" routerLinkActive="bg-neutral-200 font-semibold" class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-neutral-100">
+      <fa-icon [icon]="calendarIcon"></fa-icon>
+      Calendario
+    </a>
+    <a routerLink="/completed" routerLinkActive="bg-neutral-200 font-semibold" class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-neutral-100">
+      <fa-icon [icon]="completedIcon"></fa-icon>
+      Concluidas
+    </a>
+    <a routerLink="/settings" routerLinkActive="bg-neutral-200 font-semibold" class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-neutral-100">
+      <fa-icon [icon]="settingsIcon"></fa-icon>
+      Configuracoes
+    </a>
+  </nav>
+
+  <div class="border-t border-neutral-200 p-3">
+    <button type="button" class="inline-flex items-center gap-2 text-sm text-red-500 hover:text-red-400">
+      <fa-icon [icon]="logoutIcon"></fa-icon>
+      Sair
+    </button>
+  </div>
+</aside>

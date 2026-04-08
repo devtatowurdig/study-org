@@ -1,0 +1,101 @@
+<app-layout [searchValue]="search()" (searchValueChange)="updateSearch($event)">
+  <div class="grid gap-5 xl:grid-cols-[minmax(0,1fr)_280px]">
+    <section class="rounded-2xl border border-neutral-200 bg-white p-4 md:p-6">
+      <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <a routerLink="/dashboard" class="text-sm text-neutral-500 hover:text-primary-500">&lt; Voltar ao Dashboard</a>
+        <div class="flex items-center gap-2">
+          <button type="button" class="rounded-lg border border-neutral-200 px-3 py-1.5 text-sm text-neutral-600 hover:bg-neutral-100">
+            <fa-icon [icon]="editIcon"></fa-icon>
+            <span class="ml-1">Editar</span>
+          </button>
+          <button type="button" class="rounded-lg border border-red-200 px-3 py-1.5 text-sm text-red-500 hover:bg-red-50">
+            <fa-icon [icon]="deleteIcon"></fa-icon>
+            <span class="ml-1">Excluir</span>
+          </button>
+          <button type="button" class="rounded-lg bg-primary-500 px-3 py-1.5 text-sm font-semibold text-neutral-900 hover:bg-primary-500/80">
+            Marcar como Concluida
+          </button>
+        </div>
+      </div>
+
+      <h1 class="text-3xl font-bold text-neutral-800">Revisao para a Prova de Calculo III</h1>
+      <p class="mt-1 text-sm text-neutral-500">Matematica Avancada • Prioridade Alta</p>
+
+      <div class="mt-4 grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
+        <article class="rounded-lg border border-neutral-200 bg-neutral-50 p-3">
+          <p class="text-xs text-neutral-500">Prazo Final</p>
+          <p class="mt-1 font-semibold text-neutral-800">24 Out, 2024</p>
+        </article>
+        <article class="rounded-lg border border-neutral-200 bg-neutral-50 p-3">
+          <p class="text-xs text-neutral-500">Data Inicio</p>
+          <p class="mt-1 font-semibold text-neutral-800">15 Out, 2024</p>
+        </article>
+        <article class="rounded-lg border border-neutral-200 bg-neutral-50 p-3">
+          <p class="text-xs text-neutral-500">Tempo Estimado</p>
+          <p class="mt-1 font-semibold text-neutral-800">6 Horas</p>
+        </article>
+        <article class="rounded-lg border border-neutral-200 bg-neutral-50 p-3">
+          <p class="text-xs text-neutral-500">Recorrencia</p>
+          <p class="mt-1 font-semibold text-neutral-800">Nenhuma</p>
+        </article>
+      </div>
+
+      <div class="mt-6 space-y-6">
+        <section>
+          <h2 class="mb-2 text-lg font-semibold text-neutral-800">Descricao</h2>
+          <p class="text-sm leading-6 text-neutral-600">
+            Esta tarefa engloba a revisao completa do conteudo para a segunda prova parcial de Calculo III,
+            incluindo integrais triplas em coordenadas esfericas, teorema de Green e teorema da divergencia.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="mb-2 text-lg font-semibold text-neutral-800">Anexos</h2>
+          <div class="grid gap-2 sm:grid-cols-2">
+            @for (attachment of attachments(); track attachment.id) {
+              <article class="rounded-lg border border-neutral-200 bg-neutral-50 p-3">
+                <div class="flex items-center gap-2 text-neutral-700">
+                  <fa-icon [icon]="paperclipIcon" class="text-primary-500"></fa-icon>
+                  <p class="truncate text-sm">{{ attachment.name }}</p>
+                </div>
+                <p class="mt-1 text-xs text-neutral-500">{{ attachment.size }}</p>
+              </article>
+            }
+          </div>
+        </section>
+
+        <section>
+          <h2 class="mb-2 text-lg font-semibold text-neutral-800">Notas Pessoais</h2>
+          <p class="rounded-lg border border-neutral-200 bg-neutral-50 p-3 text-sm text-neutral-600">
+            Estudar focando nos teoremas de Stokes e Gauss. Rever a lista de exercicios 3 antes da prova.
+          </p>
+        </section>
+      </div>
+    </section>
+
+    <aside class="space-y-4">
+      <section class="rounded-2xl border border-neutral-200 bg-white p-4">
+        <h3 class="mb-2 text-lg font-semibold text-neutral-800">Historico</h3>
+        <div class="space-y-3">
+          @for (event of history(); track event.id) {
+            <article class="border-l-2 border-primary-500 pl-3">
+              <p class="text-xs text-neutral-500">{{ event.date }}</p>
+              <p class="text-sm text-neutral-700">{{ event.title }}</p>
+            </article>
+          }
+        </div>
+      </section>
+
+      <section class="rounded-2xl border border-cyan-100 bg-cyan-50 p-4">
+        <h3 class="text-sm font-semibold text-primary-500">Dica de Estudo</h3>
+        <p class="mt-1 text-sm text-neutral-600">
+          Esta tarefa tem prioridade alta e vence em 3 dias. Recomendado iniciar a revisao com blocos de 50 minutos.
+        </p>
+        <button type="button" class="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-primary-500">
+          <fa-icon [icon]="linkIcon"></fa-icon>
+          Abrir plano recomendado
+        </button>
+      </section>
+    </aside>
+  </div>
+</app-layout>

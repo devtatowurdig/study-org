@@ -3,45 +3,22 @@
         <app-logo></app-logo>
         <p class="text-neutral-600 font-medium">Sua jornada acadêmica organizada em um só lugar </p>
     </div>
-    <div class="w-md flex flex-col gap-8 bg-white rounded-xl border border-neutral-300 shadow-sm shadow-neutral-400 p-6">
+    <div
+        class="w-md h-fit flex flex-col gap-8 bg-white rounded-xl border border-neutral-300 p-6">
         <div class="flex justify-between gap-2 bg-neutral-100 rounded-md p-2 font-semibold">
-            <button class="flex-1/2 bg-white hover:bg-white/80 shadow-md text-neutral-900 py-2 rounded-md cursor-pointer">Entrar</button>
-            <button class="flex-1/2 bg-white/0 hover:bg-white/40 text-neutral-900 py-2 rounded-md cursor-pointer">Cadastrar</button>
+            <button (click)="switchTab('entrar')"
+            [class]="activeTab === 'entrar' ? 'bg-white hover:bg-white/80' : 'bg-white/0 hover:bg-white/40'"   
+            class="flex-1/2 shadow-md text-neutral-900 py-2 rounded-md cursor-pointer">Entrar</button>
+            <button (click)="switchTab('cadastrar')"
+                [class]="activeTab === 'cadastrar' ? 'bg-white hover:bg-white/80' : 'bg-white/0 hover:bg-white/40'"
+                class="flex-1/2 text-neutral-900 py-2 rounded-md cursor-pointer">Cadastrar</button>
         </div>
         <div class="">
             <h2 class="text-xl text-neutral-900 font-semibold">Bem-vindo de volta</h2>
             <p class="text-neutral-600">Insira suas credenciais para acessar sua conta</p>
         </div>
-        <form class="flex flex-col gap-4">
-            <div class="flex flex-col gap-2">
-                <label for="email" class="text-neutral-900 font-semibold">Email</label>
-                <div class="rounded-md border border-neutral-300 text-neutral-600 px-2 py-1 flex items-center gap-2">
-                    <fa-icon [icon]="emailIcon" class="text-neutral-400"></fa-icon>
-                    <input id="email" type="email" class="border-0 outline-0 h-6" placeholder="Digite seu email">
-                </div>
-            </div>
-            <div class="flex flex-col gap-2 ">
-                <div class="w-full flex justify-between items-center">
-                    <label for="email" class="text-neutral-900 font-semibold">Senha</label>
-                    <a href="#" class="text-primary-500 text-sm ">Esqueceu a senha?</a>
-                </div>
-                <div class="rounded-md border border-neutral-300 text-neutral-600 px-2 py-1 flex items-center gap-2">
-                    <fa-icon [icon]="passwordIcon" class="text-neutral-400"></fa-icon>
-                    <input id="email" type="email" class="border-0 outline-0 h-6" placeholder="Digite sua senha">
-                </div>
-            </div>
-            <div class="flex gap-2 items-center">
-                <input type="checkbox" id="rememberme" class="accent-primary-500">
-                <label for="rememberme" class="text-sm text-neutral-600 font-semibold">Lembrar de mim neste dispositivo</label>
-            </div>
-            <button class="bg-primary-500 hover:bg-primary-500/80 text-neutral-900 flex justify-center items-center gap-2 py-2 rounded-md cursor-pointer shadow-sm" >
-                <p class="text-xl font-lexend font-semibold">Entrar</p>
-                <fa-icon [icon]="arrowIcon"></fa-icon>
-            </button>
-            
-            
-        </form>
+        <app-entrar *ngIf="activeTab === 'entrar'"></app-entrar>
+        <app-registrar *ngIf="activeTab === 'cadastrar'"></app-registrar>
 
     </div>
-    
 </main>

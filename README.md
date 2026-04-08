@@ -22,29 +22,34 @@ Aplicação web para organização de atividades de estudo. Permite cadastrar ta
 
 ---
 
-## 📁 Estrutura de pastas
+## 📁 Estrutura de Pastas
 
 ```
-study-org/
-└── src/
-    └── app/
-        ├── core/
-        │   ├── models/        # Interfaces e tipos (Task, Category)
-        │   ├── services/      # Lógica de negócio (task.service.ts)
-        │   ├── guards/        # Guards de rota (expansão futura)
-        │   └── interceptors/  # Interceptors HTTP
-        ├── features/
-        │   ├── tasks/         # Feature principal de tarefas
-        │   │   ├── components/
-        │   │   ├── pages/
-        │   │   ├── tasks.routes.ts
-        │   │   └── tasks.module.ts
-        │   ├── dashboard/     # Visão geral e indicadores
-        │   └── auth/          # Autenticação (expansão futura)
-        └── shared/
-            ├── components/    # Componentes reutilizáveis (Button, Modal…)
-            └── pipes/         # Pipes customizados (DateFormat…)
+src/
+└── app/
+    ├── core/                     # Lógica de negócio (serviços e modelos)
+    │   ├── services/
+    │   │   ├── task.service.ts    # Gerenciamento de tarefas
+    │   │   └── storage.service.ts # Persistência em localStorage
+    │   └── models/
+    │       └── task.model.ts     # Interface da tarefa
+    │
+    ├── shared/                   # Componentes e utilitários reutilizáveis
+    │   ├── components/           # Componentes
+    │   └── utils/                # Funções utilitárias
+    │
+    └── view/                     # Componentes de página/view
+
+├── app.component.ts              # Componente raiz
+├── app.routes.ts                 # Rotas principais
+├── app.config.ts                 # Configuração da app
 ```
+
+### 🎯 Responsabilidades
+
+- **core/**: Serviços, models e lógica de negócio
+- **shared/**: Componentes e utilities reutilizáveis entre views
+- **view/**: Páginas/componentes de visualização principais
 
 ---
 

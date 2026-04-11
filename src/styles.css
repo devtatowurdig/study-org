@@ -1,3 +1,74 @@
-/* You can add global styles to this file, and also import other style files */
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend:wght@100..900&display=swap');
 @import 'tailwindcss';
+
+@theme default {
+    --color-primary-500: #1FD5F9;
+
+
+
+    --font-inter: 'Inter', sans-serif;
+    --font-lexend: 'Lexend', sans-serif;
+}
+
+
+:root {
+    --app-bg: #f3f4f64d;
+}
+
+.dark {
+    --app-bg: #0a0f1a;
+}
+
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--app-bg);
+}
+
+.dark body {
+    color: #e5e7eb;
+}
+
+.dark .bg-white {
+    background-color: #101826;
+}
+
+.dark .bg-neutral-50 {
+    background-color: #0f172a;
+}
+
+.dark .bg-neutral-100 {
+    background-color: #111c2e;
+}
+
+.dark .bg-neutral-200 {
+    background-color: #1f2a3d;
+}
+
+.dark .border-neutral-200,
+.dark .border-neutral-300 {
+    border-color: #273349;
+}
+
+.dark .divide-neutral-200 > :not([hidden]) ~ :not([hidden]) {
+    border-color: #273349;
+}
+
+.dark .text-neutral-900,
+.dark .text-neutral-800,
+.dark .text-neutral-700 {
+    color: #e5e7eb;
+}
+
+.dark .text-neutral-600,
+.dark .text-neutral-500,
+.dark .text-neutral-400 {
+    color: #94a3b8;
+}
+
+.dark input::placeholder {
+    color: #64748b;
+}

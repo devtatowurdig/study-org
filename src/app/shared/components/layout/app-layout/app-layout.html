@@ -1,0 +1,23 @@
+<main class="min-h-screen bg-neutral-100 p-3 md:p-5">
+  <div class="mx-auto flex min-h-[calc(100vh-1.5rem)] w-full max-w-7xl overflow-hidden rounded-2xl border border-neutral-200 bg-white">
+    <app-sidebar></app-sidebar>
+
+    <section class="flex min-w-0 flex-1 flex-col">
+      <app-topbar
+        [searchValue]="searchValue()"
+        [searchPlaceholder]="searchPlaceholder()"
+        (searchValueChange)="onSearchValueChange($event)"
+      ></app-topbar>
+
+      <app-mobile-nav></app-mobile-nav>
+
+      <div class="flex min-w-0 flex-1 flex-col gap-5 px-4 py-5 md:px-6">
+        <ng-content></ng-content>
+      </div>
+
+      <footer class="border-t border-neutral-200 px-4 py-3 text-center text-xs text-neutral-500 md:px-6">
+        © 2024 Organizador de Estudos - Gerencie seu tempo, conquiste seus objetivos.
+      </footer>
+    </section>
+  </div>
+</main>

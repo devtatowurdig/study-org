@@ -1,0 +1,29 @@
+<form class="flex flex-col gap-4">
+    <div class="flex flex-col gap-2">
+        <label for="email" class="text-neutral-900 font-semibold">Nome</label>
+        <app-input-login type="text" [icon]="nameIcon" placeholder="Digite seu nome"></app-input-login>
+    </div>
+    <div class="flex flex-col gap-2">
+        <label for="email" class="text-neutral-900 font-semibold">Email</label>
+        <app-input-login type="email" [icon]="emailIcon" placeholder="Digite seu email"></app-input-login>
+    </div>
+    <div class="flex flex-col gap-2">
+        <label for="password" class="text-neutral-900 font-semibold">Senha</label>
+        <app-input-login type="password" [icon]="passwordIcon" placeholder="Digite sua senha"></app-input-login>
+    </div>
+    <div class="flex flex-col gap-2">
+        <label for="confirmPassword" class="text-neutral-900 font-semibold">Confirmar Senha</label>
+        <app-input-login type="password" [icon]="lockIcon" placeholder="Confirme sua senha"></app-input-login>
+    </div>
+    <div>
+        <label for="terms" class="flex items-center gap-2 text-sm text-neutral-600 font-semibold">
+            <input type="checkbox" id="terms" class="accent-primary-500">
+            Aceito os termos e condições
+        </label>
+    </div>
+    <button
+        class="bg-primary-500 hover:bg-primary-500/80 text-neutral-900 flex justify-center items-center gap-2 py-2 rounded-md cursor-pointer shadow-sm">
+        <p class="text-xl font-lexend font-semibold">Cadastrar</p>
+        <fa-icon [icon]="arrowIcon"></fa-icon>
+    </button>
+</form>

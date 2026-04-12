@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowRight, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import { Logo } from '../../shared/components/logo/logo';
@@ -12,11 +13,12 @@ import { Registrar } from "../../shared/components/registrar/registrar";
   styleUrl: './login.css',
 })
 export class Login {
+  constructor(private readonly router: Router) {}
+
   logo = Logo;
   emailIcon = faEnvelope;
   passwordIcon = faLock;
   arrowIcon = faArrowRight;
-  
   activeTab: 'entrar' | 'cadastrar' = 'entrar';
 
   switchTab(tab: 'entrar' | 'cadastrar') {

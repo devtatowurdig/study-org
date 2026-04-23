@@ -1,60 +1,103 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faCalendarDays,
-  faClock,
-  faLink,
-  faPaperclip,
-  faPencil,
-  faTrashCan,
+  faCircleInfo,
+  faPlus,
+  faTags,
+  faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { AppLayout } from '../../shared/components/layout/app-layout/app-layout';
 
-interface Attachment {
-  id: number;
-  name: string;
-  size: string;
-}
+type Priority = 'baixa' | 'media' | 'alta';
 
-interface HistoryEvent {
-  id: number;
-  date: string;
-  title: string;
+interface PriorityOption {
+  value: Priority;
+  label: string;
 }
 
 @Component({
   selector: 'app-tasks',
-  imports: [AppLayout, FontAwesomeModule, RouterLink],
+  imports: [AppLayout, FontAwesomeModule, ReactiveFormsModule, RouterLink],
   templateUrl: './tasks.html',
   styleUrl: './tasks.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Tasks {
+  private readonly formBuilder = inject(FormBuilder);
+
   readonly search = signal('');
 
-  readonly attachments = signal<Attachment[]>([
-    { id: 1, name: 'Lista_Exercicios_C3.pdf', size: '2.4 MB' },
-    { id: 2, name: 'Formulas_Calculo_III.pdf', size: '850 KB' },
-    { id: 3, name: 'Anotacoes_Aula_12.png', size: '5.1 MB' },
-    { id: 4, name: 'Material_Referencia.zip', size: '12 MB' },
-  ]);
+  readonly priorities: PriorityOption[] = [
+    { value: 'baixa', label: 'Baixa' },
+    { value: 'media', label: 'Media' },
+    { value: 'alta', label: 'Alta' },
+  ];
 
-  readonly history = signal<HistoryEvent[]>([
-    { id: 1, date: 'Hoje, 09:30', title: 'Voce atualizou as notas pessoais' },
-    { id: 2, date: 'Ontem, 19:15', title: 'Anexo: Anotacoes_Aula_12' },
-    { id: 3, date: '15 Out, 2024', title: 'Tarefa movida para Em Andamento' },
-    { id: 4, date: '13 Out, 2024', title: 'Tarefa criada por voce' },
-  ]);
+  readonly recurrenceOptions = ['Nenhuma', 'Diaria', 'Semanal', 'Mensal'];
 
-  readonly paperclipIcon = faPaperclip;
-  readonly clockIcon = faClock;
+  readonly selectedTags = signal<string[]>(['Provas', 'Urgente']);
+  readonly saveMessage = signal('');
+
+  readonly taskForm = this.formBuilder.nonNullable.group({
+    title: ['', [Validators.required, Validators.minLength(4)]],
+    description: [''],
+    course: ['', [Validators.required, Validators.minLength(2)]],
+    priority: ['media' as Priority, [Validators.required]],
+    dueDate: ['2026-04-25', [Validators.required]],
+    dueTime: ['14:00', [Validators.required]],
+    estimatedHours: ['2.5', [Validators.pattern(/^\d+([.,]\d+)?$/)]],
+    recurrence: ['Nenhuma', [Validators.required]],
+    newTag: [''],
+  });
+
+  readonly canSubmit = computed(() => this.taskForm.valid && this.selectedTags().length > 0);
+
+  readonly infoIcon = faCircleInfo;
+  readonly tagsIcon = faTags;
   readonly calendarIcon = faCalendarDays;
-  readonly editIcon = faPencil;
-  readonly deleteIcon = faTrashCan;
-  readonly linkIcon = faLink;
+  readonly plusIcon = faPlus;
+  readonly removeIcon = faXmark;
 
   updateSearch(value: string): void {
     this.search.set(value);
+  }
+
+  selectPriority(priority: Priority): void {
+    this.taskForm.controls.priority.setValue(priority);
+  }
+
+  addTag(): void {
+    const rawValue = this.taskForm.controls.newTag.value;
+    const nextTag = rawValue.trim();
+
+    if (!nextTag) {
+      return;
+    }
+
+    const exists = this.selectedTags().some((tag) => tag.toLowerCase() === nextTag.toLowerCase());
+    if (exists) {
+      this.taskForm.controls.newTag.setValue('');
+      return;
+    }
+
+    this.selectedTags.update((current) => [...current, nextTag]);
+    this.taskForm.controls.newTag.setValue('');
+  }
+
+  removeTag(tagToRemove: string): void {
+    this.selectedTags.update((current) => current.filter((tag) => tag !== tagToRemove));
+  }
+
+  saveTask(): void {
+    if (!this.canSubmit()) {
+      this.taskForm.markAllAsTouched();
+      return;
+    }
+
+    const task = this.taskForm.getRawValue();
+    this.saveMessage.set(`Tarefa \"${task.title}\" pronta para criacao.`);
   }
 }

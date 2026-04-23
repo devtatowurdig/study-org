@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faCalendarDays,
@@ -39,6 +40,8 @@ interface FocusItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Dashboard {
+  private readonly router = inject(Router);
+
   readonly userName = signal('Lucas');
   readonly search = signal('');
 
@@ -130,6 +133,10 @@ export class Dashboard {
 
   updateSearch(value: string): void {
     this.search.set(value ?? '');
+  }
+
+  openCreateTask(): void {
+    void this.router.navigate(['/tasks']);
   }
 
   toggleTask(taskId: number): void {

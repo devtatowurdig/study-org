@@ -1,101 +1,190 @@
 <app-layout [searchValue]="search()" (searchValueChange)="updateSearch($event)">
-  <div class="grid gap-5 xl:grid-cols-[minmax(0,1fr)_280px]">
-    <section class="rounded-2xl border border-neutral-200 bg-white p-4 md:p-6">
-      <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <a routerLink="/dashboard" class="text-sm text-neutral-500 hover:text-primary-500">&lt; Voltar ao Dashboard</a>
-        <div class="flex items-center gap-2">
-          <button type="button" class="rounded-lg border border-neutral-200 px-3 py-1.5 text-sm text-neutral-600 hover:bg-neutral-100">
-            <fa-icon [icon]="editIcon"></fa-icon>
-            <span class="ml-1">Editar</span>
-          </button>
-          <button type="button" class="rounded-lg border border-red-200 px-3 py-1.5 text-sm text-red-500 hover:bg-red-50">
-            <fa-icon [icon]="deleteIcon"></fa-icon>
-            <span class="ml-1">Excluir</span>
-          </button>
-          <button type="button" class="rounded-lg bg-primary-500 px-3 py-1.5 text-sm font-semibold text-neutral-900 hover:bg-primary-500/80">
-            Marcar como Concluida
-          </button>
-        </div>
-      </div>
+  <div class="mx-auto w-full max-w-4xl">
+    <header class="mb-6">
+      <h1 class="text-4xl font-bold text-neutral-900">Criar Nova Tarefa</h1>
+      <p class="mt-2 text-neutral-500">Preencha os detalhes abaixo para organizar seu cronograma de estudos.</p>
+    </header>
 
-      <h1 class="text-3xl font-bold text-neutral-800">Revisao para a Prova de Calculo III</h1>
-      <p class="mt-1 text-sm text-neutral-500">Matematica Avancada • Prioridade Alta</p>
+    <form [formGroup]="taskForm" (ngSubmit)="saveTask()" class="rounded-2xl border border-neutral-200 bg-white p-5 md:p-6">
+      <section class="pb-6">
+        <h2 class="mb-4 flex items-center gap-2 border-b border-neutral-200 pb-3 text-2xl font-semibold text-primary-500">
+          <fa-icon [icon]="infoIcon"></fa-icon>
+          Informacoes Basicas
+        </h2>
 
-      <div class="mt-4 grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
-        <article class="rounded-lg border border-neutral-200 bg-neutral-50 p-3">
-          <p class="text-xs text-neutral-500">Prazo Final</p>
-          <p class="mt-1 font-semibold text-neutral-800">24 Out, 2024</p>
-        </article>
-        <article class="rounded-lg border border-neutral-200 bg-neutral-50 p-3">
-          <p class="text-xs text-neutral-500">Data Inicio</p>
-          <p class="mt-1 font-semibold text-neutral-800">15 Out, 2024</p>
-        </article>
-        <article class="rounded-lg border border-neutral-200 bg-neutral-50 p-3">
-          <p class="text-xs text-neutral-500">Tempo Estimado</p>
-          <p class="mt-1 font-semibold text-neutral-800">6 Horas</p>
-        </article>
-        <article class="rounded-lg border border-neutral-200 bg-neutral-50 p-3">
-          <p class="text-xs text-neutral-500">Recorrencia</p>
-          <p class="mt-1 font-semibold text-neutral-800">Nenhuma</p>
-        </article>
-      </div>
-
-      <div class="mt-6 space-y-6">
-        <section>
-          <h2 class="mb-2 text-lg font-semibold text-neutral-800">Descricao</h2>
-          <p class="text-sm leading-6 text-neutral-600">
-            Esta tarefa engloba a revisao completa do conteudo para a segunda prova parcial de Calculo III,
-            incluindo integrais triplas em coordenadas esfericas, teorema de Green e teorema da divergencia.
-          </p>
-        </section>
-
-        <section>
-          <h2 class="mb-2 text-lg font-semibold text-neutral-800">Anexos</h2>
-          <div class="grid gap-2 sm:grid-cols-2">
-            @for (attachment of attachments(); track attachment.id) {
-              <article class="rounded-lg border border-neutral-200 bg-neutral-50 p-3">
-                <div class="flex items-center gap-2 text-neutral-700">
-                  <fa-icon [icon]="paperclipIcon" class="text-primary-500"></fa-icon>
-                  <p class="truncate text-sm">{{ attachment.name }}</p>
-                </div>
-                <p class="mt-1 text-xs text-neutral-500">{{ attachment.size }}</p>
-              </article>
+        <div class="space-y-4">
+          <div>
+            <label for="task-title" class="mb-1 block text-sm font-semibold text-neutral-700">Titulo da Tarefa *</label>
+            <input
+              id="task-title"
+              formControlName="title"
+              type="text"
+              placeholder="Ex: Estudar Algebra Linear - Capitulo 4"
+              class="w-full rounded-lg border border-neutral-200 px-3 py-2.5 text-neutral-700 outline-none transition focus:border-primary-500"
+            />
+            @if (taskForm.controls.title.touched && taskForm.controls.title.invalid) {
+              <p class="mt-1 text-xs text-red-500">Informe um titulo com pelo menos 4 caracteres.</p>
             }
           </div>
-        </section>
 
-        <section>
-          <h2 class="mb-2 text-lg font-semibold text-neutral-800">Notas Pessoais</h2>
-          <p class="rounded-lg border border-neutral-200 bg-neutral-50 p-3 text-sm text-neutral-600">
-            Estudar focando nos teoremas de Stokes e Gauss. Rever a lista de exercicios 3 antes da prova.
-          </p>
-        </section>
-      </div>
-    </section>
-
-    <aside class="space-y-4">
-      <section class="rounded-2xl border border-neutral-200 bg-white p-4">
-        <h3 class="mb-2 text-lg font-semibold text-neutral-800">Historico</h3>
-        <div class="space-y-3">
-          @for (event of history(); track event.id) {
-            <article class="border-l-2 border-primary-500 pl-3">
-              <p class="text-xs text-neutral-500">{{ event.date }}</p>
-              <p class="text-sm text-neutral-700">{{ event.title }}</p>
-            </article>
-          }
+          <div>
+            <label for="task-description" class="mb-1 block text-sm font-semibold text-neutral-700">Descricao Detalhada</label>
+            <textarea
+              id="task-description"
+              formControlName="description"
+              rows="4"
+              placeholder="Descreva o que precisa ser feito, objetivos ou observacoes importantes..."
+              class="w-full resize-none rounded-lg border border-neutral-200 px-3 py-2.5 text-neutral-700 outline-none transition focus:border-primary-500"
+            ></textarea>
+          </div>
         </div>
       </section>
 
-      <section class="rounded-2xl border border-cyan-100 bg-cyan-50 p-4">
-        <h3 class="text-sm font-semibold text-primary-500">Dica de Estudo</h3>
-        <p class="mt-1 text-sm text-neutral-600">
-          Esta tarefa tem prioridade alta e vence em 3 dias. Recomendado iniciar a revisao com blocos de 50 minutos.
-        </p>
-        <button type="button" class="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-primary-500">
-          <fa-icon [icon]="linkIcon"></fa-icon>
-          Abrir plano recomendado
-        </button>
+      <section class="border-t border-neutral-200 py-6">
+        <h2 class="mb-4 flex items-center gap-2 border-b border-neutral-200 pb-3 text-2xl font-semibold text-primary-500">
+          <fa-icon [icon]="tagsIcon"></fa-icon>
+          Categorizacao e Prioridade
+        </h2>
+
+        <div class="grid gap-4 md:grid-cols-2">
+          <div>
+            <label for="task-course" class="mb-1 block text-sm font-semibold text-neutral-700">Curso / Materia</label>
+            <input
+              id="task-course"
+              formControlName="course"
+              type="text"
+              placeholder="Ex: Calculo III"
+              class="w-full rounded-lg border border-neutral-200 px-3 py-2.5 text-neutral-700 outline-none transition focus:border-primary-500"
+            />
+            @if (taskForm.controls.course.touched && taskForm.controls.course.invalid) {
+              <p class="mt-1 text-xs text-red-500">Informe a cadeira manualmente.</p>
+            }
+          </div>
+
+          <div>
+            <p class="mb-1 block text-sm font-semibold text-neutral-700">Prioridade</p>
+            <div class="grid grid-cols-3 gap-2">
+              @for (priority of priorities; track priority.value) {
+                <button
+                  type="button"
+                  (click)="selectPriority(priority.value)"
+                  [class]="taskForm.controls.priority.value === priority.value
+                    ? 'rounded-lg border border-neutral-800 bg-neutral-100 px-3 py-2 text-sm font-semibold text-neutral-800'
+                    : 'rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm font-semibold text-neutral-600 hover:bg-neutral-100'"
+                >
+                  {{ priority.label }}
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <p class="mb-2 text-sm font-semibold text-neutral-700">Etiquetas (Tags)</p>
+          <div class="mb-3 flex flex-wrap gap-2">
+            @for (tag of selectedTags(); track tag) {
+              <button
+                type="button"
+                class="inline-flex items-center gap-1 rounded-full border border-neutral-200 bg-neutral-100 px-2.5 py-1 text-xs font-semibold text-neutral-700"
+                (click)="removeTag(tag)"
+              >
+                <span>{{ tag }}</span>
+                <fa-icon [icon]="removeIcon"></fa-icon>
+              </button>
+            }
+          </div>
+
+          <div class="flex max-w-sm items-center gap-2">
+            <input
+              type="text"
+              formControlName="newTag"
+              placeholder="Nova etiqueta..."
+              class="w-full rounded-lg border border-neutral-200 px-3 py-2 text-sm text-neutral-700 outline-none transition focus:border-primary-500"
+            />
+            <button
+              type="button"
+              class="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-neutral-200 bg-neutral-50 text-neutral-700 hover:bg-neutral-100"
+              (click)="addTag()"
+              aria-label="Adicionar etiqueta"
+            >
+              <fa-icon [icon]="plusIcon"></fa-icon>
+            </button>
+          </div>
+        </div>
       </section>
-    </aside>
+
+      <section class="border-t border-neutral-200 pt-6">
+        <h2 class="mb-4 flex items-center gap-2 border-b border-neutral-200 pb-3 text-2xl font-semibold text-primary-500">
+          <fa-icon [icon]="calendarIcon"></fa-icon>
+          Prazos e Planejamento
+        </h2>
+
+        <div class="grid gap-4 md:grid-cols-6">
+          <div class="md:col-span-2">
+            <label for="task-date" class="mb-1 block text-sm font-semibold text-neutral-700">Data do Prazo</label>
+            <input
+              id="task-date"
+              type="date"
+              formControlName="dueDate"
+              class="w-full rounded-lg border border-neutral-200 px-3 py-2.5 text-neutral-700 outline-none transition focus:border-primary-500"
+            />
+          </div>
+
+          <div class="md:col-span-1">
+            <label for="task-time" class="mb-1 block text-sm font-semibold text-neutral-700">Hora</label>
+            <input
+              id="task-time"
+              type="time"
+              formControlName="dueTime"
+              class="w-full rounded-lg border border-neutral-200 px-3 py-2.5 text-neutral-700 outline-none transition focus:border-primary-500"
+            />
+          </div>
+
+          <div class="md:col-span-3">
+            <label for="task-estimate" class="mb-1 block text-sm font-semibold text-neutral-700">Tempo Estimado (Horas)</label>
+            <input
+              id="task-estimate"
+              type="text"
+              formControlName="estimatedHours"
+              placeholder="Ex: 2.5"
+              class="w-full rounded-lg border border-neutral-200 px-3 py-2.5 text-neutral-700 outline-none transition focus:border-primary-500"
+            />
+          </div>
+        </div>
+
+        <div class="mt-4 max-w-sm">
+          <label for="task-recurrence" class="mb-1 block text-sm font-semibold text-neutral-700">Recorrencia</label>
+          <select
+            id="task-recurrence"
+            formControlName="recurrence"
+            class="w-full rounded-lg border border-neutral-200 px-3 py-2.5 text-neutral-700 outline-none transition focus:border-primary-500"
+          >
+            @for (option of recurrenceOptions; track option) {
+              <option [value]="option">{{ option }}</option>
+            }
+          </select>
+        </div>
+      </section>
+
+      <footer class="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-neutral-200 pt-4">
+        <a routerLink="/dashboard" class="rounded-lg border border-neutral-200 px-4 py-2 text-sm font-semibold text-neutral-600 hover:bg-neutral-100">
+          Voltar para Dashboard
+        </a>
+
+        <button
+          type="submit"
+          class="rounded-lg bg-primary-500 px-5 py-2.5 text-sm font-semibold text-neutral-900 transition hover:bg-primary-500/80 disabled:cursor-not-allowed disabled:opacity-60"
+          [disabled]="!canSubmit()"
+        >
+          Criar Tarefa
+        </button>
+      </footer>
+
+      @if (saveMessage()) {
+        <p class="mt-3 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
+          {{ saveMessage() }}
+        </p>
+      }
+    </form>
   </div>
 </app-layout>

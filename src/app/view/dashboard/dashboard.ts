@@ -161,6 +161,7 @@ export class Dashboard {
 
   readonly weeklyAverageDisplay = computed(() => `${this.summary().weeklyAverage}%`);
 
+  readonly maxWeeklyIntensityBlocks = 4;
   readonly weekDays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'] as const;
 
   readonly weeklyTasksIntensity = computed(() => {
@@ -174,12 +175,14 @@ export class Dashboard {
       Dom: 0,
     };
 
-    this.tasks().forEach((task) => {
-      const day = this.formatWeekday(task.date);
-      if (day in intensity) {
-        intensity[day] += 1;
-      }
-    });
+    this.tasks()
+      .filter((task) => this.isDateInCurrentWeek(task.date))
+      .forEach((task) => {
+        const day = this.formatWeekday(task.date);
+        if (day in intensity) {
+          intensity[day] += 1;
+        }
+      });
 
     return this.weekDays.map((day) => ({
       day,
@@ -423,6 +426,11 @@ export class Dashboard {
     return 'bg-cyan-500 border-cyan-600';
   }
 
+  weeklyIntensityBlocks(count: number): number[] {
+    const visibleBlocks = Math.min(count, this.maxWeeklyIntensityBlocks);
+    return Array.from({ length: visibleBlocks }, (_, index) => index);
+  }
+
   getTaskEmoji(course: string): string {
     const emojiMap: Record<string, string> = {
       engenharia: '⚙️',
@@ -567,6 +575,26 @@ export class Dashboard {
     return target >= today && target <= limit;
   }
 
+  private isDateInCurrentWeek(date: string): boolean {
+    const { start, end } = this.currentWeekRange();
+    return date >= start && date <= end;
+  }
+
+  private currentWeekRange(): { start: string; end: string } {
+    const today = this.startOfTodayLocal();
+    const daysSinceMonday = (today.getDay() + 6) % 7;
+    const start = new Date(today);
+    start.setDate(today.getDate() - daysSinceMonday);
+
+    const end = new Date(start);
+    end.setDate(start.getDate() + 6);
+
+    return {
+      start: this.formatLocalDateOnly(start),
+      end: this.formatLocalDateOnly(end),
+    };
+  }
+
   private sortByDeadline(left: StudyTask, right: StudyTask): number {
     const leftTime = Date.parse(`${left.date}T${left.time ?? '23:59'}:00Z`);
     const rightTime = Date.parse(`${right.date}T${right.time ?? '23:59'}:00Z`);
@@ -600,6 +628,18 @@ export class Dashboard {
 
   private formatDateOnly(date: Date): string {
     return date.toISOString().slice(0, 10);
+  }
+
+  private formatLocalDateOnly(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  private startOfTodayLocal(): Date {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate());
   }
 
   private startOfTodayUtc(): number {

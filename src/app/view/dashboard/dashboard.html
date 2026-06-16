@@ -145,7 +145,7 @@
               <div class="flex flex-1 flex-col items-center gap-2">
                 <div class="flex w-full flex-col gap-1">
                   @if (day.count > 0) {
-                    @for (i of [].constructor(day.count); track $index) {
+                    @for (i of weeklyIntensityBlocks(day.count); track $index) {
                       <div class="h-6 rounded-sm" [class]="heatmapColor(day.count)" [title]="day.count + ' tarefa(s)'"></div>
                     }
                   } @else {
